@@ -33,8 +33,8 @@ for key, values in list(freq.items()):
     if values < 5:
         del freq[key]
 
-# Sorting the frequency item
-sorted(freq.items(), key=lambda item: item[1], reverse=True)  # sorting the high frequency words
+# sorting the high frequency words
+sorted(freq.items(), key=lambda item: item[1], reverse=True)  
 
 # print top 10 distribution words
 freq.plot(10, cumulative=False)  # print 10 high frequency keywords

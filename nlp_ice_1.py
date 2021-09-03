@@ -8,7 +8,7 @@ Original file is located at
 """
 
 from bs4 import BeautifulSoup
-import matplotlib
+import matplotlib.pyplot as plt
 import urllib.request
 
 import nltk
@@ -16,6 +16,8 @@ nltk.download('stopwords')
 from nltk.corpus import stopwords
 import pandas as pd
 import seaborn as sns
+
+from wordcloud import WordCloud
 
 response = urllib.request.urlopen('https://en.wikipedia.org/wiki/SpaceX')
 
@@ -46,11 +48,10 @@ for key, values in list(freq.items()):
 
 sorted(freq.items(), key=lambda item: item[1], reverse=True)  
 
-# print top 10 distribution words
-freq.plot(10, cumulative=False)  # print 10 high frequency keywords
+# plot top 10 distribution words
+freq.plot(10, cumulative=False)  # plot 10 high frequency keywords
 
 # Code to create another visual for word frequency
-
 dict_variable = {key:value for (key,value) in freq.items()}
 data = pd.DataFrame.from_dict(dict_variable, orient='index')
 data = data.reset_index()
@@ -59,3 +60,12 @@ data.sort_values(by=['frequency'], inplace=True, ascending=False)
 
 ax = sns.barplot(x="word", y="frequency", data=data[0:10])
 ax.tick_params(axis='x', rotation=90)
+
+# code for word cloud visual
+wordcloud = WordCloud().generate(str(clean_tokens))
+
+plt.figure(figsize=(15,10))
+plt.clf()
+plt.imshow(wordcloud)
+plt.axis('off')
+plt.show()
